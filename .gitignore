@@ -1,0 +1,22 @@
+# Node
+node_modules/
+dist/
+.env
+.env.*
+backend/.env
+frontend/.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temp files (PDF/DOCX generation)
+backend/tmp/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/

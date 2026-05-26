@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: educase
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: free
+    region: ohio
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: LIBREOFFICE_PATH
+        value: soffice
+      - key: SUPABASE_STORAGE_BUCKET
+        value: certificados
+      - key: SUPABASE_URL
+        sync: false
+        placeholder: "Sua URL do Supabase (ex: https://fjqgazxrtpubmiviyfze.supabase.co)"
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+        placeholder: "Sua chave de serviço do Supabase (service_role JWT)"

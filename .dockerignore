@@ -1,0 +1,28 @@
+# Node modules
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Local builds
+frontend/dist/
+
+# Environment files and credentials
+.env
+backend/.env
+frontend/.env
+.git/
+.gitignore
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Documentation and temporary scripts
+README.md
+tmp_check_word.ps1
+tmp_check_mammoth.js
+tmp_template.html
+backend/tmp_check_mammoth.js
+backend/scripts/
+backend/tmp_test.docx
+backend/tmp_test.pdf
