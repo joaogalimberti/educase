@@ -30,6 +30,14 @@ RUN npm install --prefix frontend
 # Copia o restante do código-fonte para a imagem
 COPY . .
 
+# ─── Build args para o Vite (variáveis VITE_* devem ser passadas em build time) ───
+# O Vite embute essas variáveis no bundle estático — elas não existem em runtime.
+# No Render, defina-as como "Environment Variables" com a opção "Available at build time".
+ARG VITE_SUPABASE_URL
+ARG VITE_SUPABASE_ANON_KEY
+ENV VITE_SUPABASE_URL=$VITE_SUPABASE_URL
+ENV VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY
+
 # Compila o frontend React/Vite para gerar a pasta 'dist'
 RUN npm run build --prefix frontend
 

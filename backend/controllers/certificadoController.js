@@ -1,17 +1,31 @@
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
+import https from 'https'
 import { Router } from 'express'
 import { createClient } from '@supabase/supabase-js'
 import { gerarDoc } from '../services/gerarDoc.js'
 import { converterPdf } from '../services/converterPdf.js'
 
+// Força IPv4 nas requisições ao Supabase (evita erros de IPv6 no Render)
+const ipv4Agent = new https.Agent({ family: 4 })
+const fetchIPv4 = (url, options = {}) => fetch(url, { ...options, agent: ipv4Agent })
+
 const router = Router()
 
+// Validação preventiva das credenciais do Supabase
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    console.error('❌ ERRO CRÍTICO: As variáveis de ambiente SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY não estão definidas!')
+    console.error('Por favor, configure-as na aba "Environment" do seu painel do Render.')
+    process.exit(1)
+}
+
 // Supabase Admin (service role) para bypass de RLS no storage e banco
+// global: { fetch: fetchIPv4 } força IPv4 para evitar erros de conexão no Render
 const supabase = createClient(
     process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
+    process.env.SUPABASE_SERVICE_ROLE_KEY,
+    { global: { fetch: fetchIPv4 } }
 )
 
 // ─── Middleware: valida JWT do usuário via Supabase Auth ──────────────────────

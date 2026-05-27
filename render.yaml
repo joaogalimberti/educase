@@ -14,9 +14,25 @@ services:
         value: soffice
       - key: SUPABASE_STORAGE_BUCKET
         value: certificados
+
+      # ─── Supabase (backend) ────────────────────────────────────────────────
       - key: SUPABASE_URL
-        sync: false
-        placeholder: "Sua URL do Supabase (ex: https://fjqgazxrtpubmiviyfze.supabase.co)"
+        value: https://fjqgazxrtpubmiviyfze.supabase.co
       - key: SUPABASE_SERVICE_ROLE_KEY
         sync: false
-        placeholder: "Sua chave de serviço do Supabase (service_role JWT)"
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZqcWdhenhydHB1Ym1pdml5ZnplIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTcwMjkyNSwiZXhwIjoyMDg3Mjc4OTI1fQ.bJAIGvtWrPDxM0r--Zc4Td_HVZJtd93Y0dFuNW1VJsc
+
+      # ─── CORS ─────────────────────────────────────────────────────────────
+      # Defina aqui a URL pública do seu serviço no Render após o primeiro deploy
+      # Exemplo: https://educase.onrender.com
+      - key: FRONTEND_URL
+        sync: false
+        value: https://educase.onrender.com
+
+      # ─── Supabase (frontend / Vite build-time) ────────────────────────────
+      # IMPORTANTE: Marque estas variáveis como "Available at build time" no painel do Render
+      # (ou use o render.yaml com dockerContext — os ARGs do Dockerfile serão passados automaticamente)
+      - key: VITE_SUPABASE_URL
+        value: https://fjqgazxrtpubmiviyfze.supabase.co
+      - key: VITE_SUPABASE_ANON_KEY
+        value: sb_publishable_YkU0n_XjqbjrizY6iCjE_g_PiR06VYq

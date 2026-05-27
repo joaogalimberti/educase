@@ -22,8 +22,19 @@ const app = express()
 const PORT = process.env.PORT || 3001
 
 // ─── Middlewares ────────────────────────────────────────────────────────────
+const allowedOrigins = [
+    'http://localhost:5173',
+    'http://localhost:4173',
+    // URL do Render em produção (definida via variável de ambiente)
+    process.env.FRONTEND_URL,
+].filter(Boolean)
+
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:4173'],
+    origin: (origin, callback) => {
+        // Permite requisições sem origin (curl, Postman, same-origin no Docker)
+        if (!origin || allowedOrigins.includes(origin)) return callback(null, true)
+        callback(new Error(`CORS bloqueado para: ${origin}`))
+    },
     credentials: true,
 }))
 app.use(express.json({ limit: '10mb' }))
